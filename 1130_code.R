@@ -26,7 +26,6 @@ library(rgdal)
 
 ##population
 ##oa_temp
-
 setwd("C:/Users/Yeorim/Desktop/advanced/oa_temp")
 list<-list.files()
 df1<-data.frame()
@@ -94,7 +93,6 @@ oa.centroid <- st_centroid(oa.sf)
 hospital_sf <- st_as_sf(hospital)
 hosp.dist <- st_distance(oa.centroid, hospital_sf)
 
-
 #calculatre 2SFCA
 oa_area$mean_pop[is.na(oa_area$mean_pop)]<-0
 oa_area$mean_pop
@@ -115,13 +113,11 @@ tm_shape(oa.sp, unit = "m") +
   tm_scale_bar(position = c("left", "bottom")) +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.outside.position = "right")
 
-
 tm_shape(oa.sp, unit = "m") +
   tm_polygons(col = "mean_pop", style = "jenks", palette = "Reds", 
               border.alpha = 0, title = "mean of de facto population") +
   tm_scale_bar(position = c("left", "bottom")) +
   tm_layout(frame = FALSE, legend.outside = TRUE, legend.outside.position = "right")
-
 
 oa.sp<-as(oa.sf, Class= "Spatial")
 oa.sp@proj4string
@@ -129,7 +125,6 @@ crs(oa.sp)<-"+proj=longlat +datum=WGS84"
 
 writeOGR(oa.sp, dsn = "C:/Users/Yeorim/Desktop/advanced/data", layer = 'oatsfca',
          driver = 'ESRI Shapefile')
-
 
 ###########단계구분도
 oa.groups <- classIntervals(oa.sp$TSFCA, 5, style = "jenks")
@@ -146,10 +141,7 @@ legend("bottomleft", fill = attr(oa.colors, "palette"),
        box.col = "gray",cex=0.8)
 
 num<-read.csv("C:/Users/Yeorim/Desktop/advanced/data/num.csv")
-View(aa)
 aaa<-aa$NUMPOINTS
-hist(aaa, seq=)
-View(as.data.frame(num))
 
 #loacalG
 ##shp: seoul
@@ -172,31 +164,3 @@ crs(oa.sp2)<-"+proj=longlat +datum=WGS84"
 
 writeOGR(oa.sp2, dsn = "C:/Users/Yeorim/Desktop/advanced/data", layer = 'oalocalg',
          driver = 'ESRI Shapefile')
-
-aa<-which(oa.sf$seoul.localG<= -1.96)
-b<-which(oa.sf$seoul.localG>= 1.96)
-View(oa_area@data[aa,])
-View(oa_area@data[b,])
-View(as.data.frame(unique(oa_area@data[b,]$ADM_NM)))
-View(as.data.frame(unique(oa_area@data[a,]$ADM_NM)))
-quantile(oa_area$mean_pop)
-a
-plot(oa_area, col = "Grey 90", border = NA)
-plot(oa_area[a,], col = "red", border = NA, add = TRUE)
-
-median(oa_area$mean_pop)
-nrow(as.data.frame(oa_area[a,]))
-nrow(as.data.frame(oa_area[b,]))
-
-View(as.data.frame(oa_area[a,]))
-
-View(as.data.frame(oa.sf$seoul.localG))
-
-oa.sf$seoul.localG
-G<-as.numeric(oa.sf$seoul.localG)     
-View(as.data.frame(G))
-
-oa.sf$seoul.localG<-G
-temp<-as.data.frame(oa_area[a,])
-temp$num<-as.vector(rep(0, times = 12))
-View(temp)
